@@ -1,6 +1,7 @@
 package com.supralog.recruitment.springexamusercrud.users;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.supralog.recruitment.springexamusercrud.common.DefaultDto;
 import com.supralog.recruitment.springexamusercrud.common.error.BadAttributeException;
 import io.swagger.annotations.ApiModelProperty;
@@ -44,6 +45,7 @@ public class User implements DefaultDto {
     @NotNull
     @NotBlank(message = "Country of residence is mandatory")
     @ApiModelProperty(example = "France")
+    @Pattern(regexp = "France", message = "Only user from \"France\" can be registered.")
     private String country;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -54,6 +56,7 @@ public class User implements DefaultDto {
     @ApiModelProperty(example = "0708090102")
     private String phoneNumber;
 
+    @JsonGetter
     Integer getAge(){
         if (birthDate == null) return null;
         return Period.between(birthDate, LocalDate.now()).getYears();

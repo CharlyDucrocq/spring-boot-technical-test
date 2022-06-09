@@ -2,7 +2,6 @@ package com.supralog.recruitment.springexamusercrud.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.hibernate.type.descriptor.java.LocalDateTimeJavaDescriptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -79,6 +78,20 @@ public class UserControllerTest {
         LocalDate todayBut17Before = LocalDate.now().minusYears(User.MINIMAL_AGE_REQUIRED-1);
 
         User newUser = new User(null, "test1", Gender.OTHER, "France", todayBut17Before, "0708090102");
+        String userJson = mapper.writeValueAsString(newUser);
+
+        this.mockMvc.perform(post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJson))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void creationButNotFrench() throws Exception {
+        LocalDate todayBut17Before = LocalDate.now().minusYears(User.MINIMAL_AGE_REQUIRED);
+
+        User newUser = new User(null, "test1", Gender.OTHER, "US", todayBut17Before, "0708090102");
         String userJson = mapper.writeValueAsString(newUser);
 
         this.mockMvc.perform(post("/users")
