@@ -1,6 +1,8 @@
 # SPRING BOOT TECHNICAL TEST by Charly Ducrocq
+This project is a simple REST app that allow to create and get users. 
+You can see all the test statement [here](./statement.pdf).
 
-## Dependencies
+## Requirement
 - java 17
 - maven
 
