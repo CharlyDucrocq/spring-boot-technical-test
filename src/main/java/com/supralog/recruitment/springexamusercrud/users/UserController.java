@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import com.supralog.recruitment.springexamusercrud.users.models.User;
 
 @RestController()
 @RequestMapping("users")
@@ -25,9 +26,8 @@ public class UserController {
         return this.userService.findById(id);
     }
 
-    @PostMapping()@Valid
+    @PostMapping()
     User createUser(@RequestBody @Valid User usr ){
-        usr.validate();
         return this.userService.create(usr);
     }
 }
